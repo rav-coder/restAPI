@@ -4,10 +4,26 @@ import express from 'express';
 //import the allRoutes function from our restRoute.js file
 import allRoutes from './src/route/restRoute.js';
 
+//import mongoose
+import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
+
 const app = express();
 
-// Setup the port for ther server
+// Setup the port for the server
 const port = 4000;
+
+//set connection between the API and mongoDB
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/restDB', {
+    //avoid errors
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
+
+//parse requests and make it redable for our API
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 //call the allRoute function and send app which initializes express
 allRoutes(app);

@@ -1,3 +1,12 @@
+//import required functions from restController
+import {
+    addStudent,
+    getStudents,
+    getStudentByID,
+    updateStudentByID,
+    deleteStudentByID
+} from '../controller/restController.js';
+
 //Specific routes for different endpoints 
 // such as get, post, delete and put
 const allRoutes = (app) => {
@@ -5,25 +14,30 @@ const allRoutes = (app) => {
     // we use student to get a list of all students or post a new student
     app.route('/student')
 
-    // get a request and issue a response for get
-    .get((req, res) =>
-
-        // the response is the message that is sent back
-        res.send('Sucessful GET request.')
+    // call the getStudents function
+    .get(
+        getStudents
     )
 
-    .post((req, res) =>
-        res.send('Sucessful POST request.')
+    //call the addStudent function
+    .post(
+        addStudent
     );
 
-    // we pass studentID to delete and update a specific student
+    // we pass studentID to get, delete and update a specific student
     app.route('/student/:studentID')
-        .delete((req, res) =>
-            res.send('Sucessful DELETE request.')
-        )
-        .put((req, res) =>
-            res.send('Sucessful PUT request.')
-        );
+
+    .get(
+        getStudentByID
+    )
+
+    .delete(
+        deleteStudentByID
+    )
+
+    .put(
+        updateStudentByID
+    );
 }
 
 //export the allRoutes function so index.js can use it
